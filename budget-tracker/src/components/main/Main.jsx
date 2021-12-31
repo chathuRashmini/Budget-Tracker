@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, Typography, Grid, Divider } from '@mater
 
 import useStyles from './styles'
 import Form from './form/Form'
+import List from './list/List'
 
 const Main = () => {
 
@@ -32,7 +33,7 @@ const Main = () => {
             <CardContent className={classes.cartContent}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <p>LIST COMPONENT</p>
+                        <List />
                     </Grid>
                 </Grid>
             </CardContent>

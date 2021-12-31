@@ -45,7 +45,7 @@ const Form = () => {
                 <TextField type="date" label='date' fullWidth />
             </Grid>
 
-            <Button className={classes.button} variant='outlines' color='primary' fullWidth>
+            <Button className={classes.button} variant='outlined' color='primary' fullWidth>
                 Create
             </Button>
         </Grid>
