@@ -3,10 +3,12 @@ import { List as MuiList, ListItem, ListItemAvatar, ListItemText, Avatar, ListIt
 import { Delete, MoneyOff } from '@material-ui/icons';
 
 import useStyles from './styles'
+import { ExpenseTrackerContext } from '../../../context/context';
 
 const List = () => {
 
     const classes = useStyles()
+    const { deleteTransaction } = useContext(ExpenseTrackerContext)
 
     const transactions = [
         { 
