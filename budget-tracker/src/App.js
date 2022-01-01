@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
+import { PushToTalkButton, PushToTalkButtonContainer, ErrorPanel } from '@speechly/react-ui'
 
 import Details from './components/Details/Details';
 import Main from './components/main/Main';
@@ -8,6 +9,14 @@ import useStyles from './styles'
 const App = () => {
 
     const classes = useStyles();
+
+    const func = () => {
+        var context = new AudioContext()
+        
+        context.resume().then(() => {
+            console.log('Playback resumed successfully!')
+        })
+    }
 
     return (
         <div>
@@ -35,6 +44,13 @@ const App = () => {
                     />
                 </Grid>
             </Grid>
+
+            <button onClick={func}>test</button>
+
+            <PushToTalkButtonContainer>
+                <PushToTalkButton />
+                <ErrorPanel />
+            </PushToTalkButtonContainer>
         </div>
     )
 }
