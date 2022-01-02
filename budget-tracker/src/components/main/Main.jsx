@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, Typography, Grid, Divider } from '@mater
 import useStyles from './styles'
 import Form from './form/Form'
 import List from './list/List'
+import InfoCard from '../InfoCard'
 import { ExpenseTrackerContext } from '../../context/context'
 
 const Main = () => {
@@ -24,10 +25,10 @@ const Main = () => {
                 </Typography>
                 
                 <Typography variant='subtitle1' style={{ lineHeight: '1.5em', marginTop: '20px' }}>
-                    Info Card Component
+                    <InfoCard />
                 </Typography>
 
-                <Divider />
+                <Divider className={classes.divider} />
 
                 <Form />
             </CardContent>
