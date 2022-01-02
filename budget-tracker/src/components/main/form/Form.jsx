@@ -23,6 +23,10 @@ const Form = () => {
     const { segment } = useSpeechContext()
 
     const createTransaction = () => {
+        if(Number.isNaN(Number(formData.amount)) || !formData.date.includes('-')) {
+            return;
+        }
+        
         const transaction = { 
             ...formData, 
             amount: Number(formData.amount),
@@ -34,14 +38,71 @@ const Form = () => {
 
     useEffect(() => {
         if(segment) {
-            if(segment.intent.intent === 'add_income') {
+            if(segment.intent.intent === 'add_expense') {
                 setformData({ 
                     ...formData, 
                     type: 'Expense'
                 })
             }
+            else if(segment.intent.intent === 'add_income') {
+                setformData({ 
+                    ...formData, 
+                    type: 'Income'
+                })
+            }
+            else if(segment.isFinal && segment.intent.intent === 'create_transaction') {
+                return createTransaction()
+            }
+            else if(segment.isFinal && segment.intent.intent === 'cancel_transaction') {
+                return setformData(initialState)
+            }
+
+            segment.entities.forEach((e) => {
+
+                const category = `${e.value.charAt(0)}${e.value.slice(1).toLowerCase()}`;
+
+                switch (e.type) {
+                    case 'amount':
+                        setformData({
+                            ...formData,
+                            amount: e.value
+                        })
+                        break;
+
+                    case 'category':
+                        if(incomeCategories.map((ic) => ic.type).includes(category)) {
+                            setformData({
+                                ...formData,
+                                type: 'Income',
+                                category: category
+                            })
+                        }
+                        else if(expenseCategories.map((ec) => ec.type).includes(category)){
+                            setformData({
+                                ...formData,
+                                type: 'Expense',
+                                category: category
+                            })
+                        }
+                        break;
+
+                    case 'date':
+                        setformData({
+                            ...formData,
+                            date: e.value
+                        })
+                        break;
+                
+                    default:
+                        break;
+                }
+            })
+
+            if(segment.isFinal && formData.amount && formData.type && formData.date && formData.category) {
+                createTransaction()
+            }
         }
-    }, [])
+    }, [segment])
 
     const selectedCategories = formData.type === 'Income' ? incomeCategories : expenseCategories
 
